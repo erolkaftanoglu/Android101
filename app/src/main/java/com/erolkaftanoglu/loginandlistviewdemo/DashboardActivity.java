@@ -1,16 +1,20 @@
 package com.erolkaftanoglu.loginandlistviewdemo;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +36,32 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         myListViewAdapter = new MyListViewAdapter(kullaniciIsimleri,this);
         kullanicilar.setAdapter(myListViewAdapter);
 
+        kullanicilar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.v("hello",
+                        kullaniciIsimleri.get(position) +
+                                "isimli item tıklandı"
+                );
+                showAlertDialog();
+            }
+        });
+
     }
+    void showAlertDialog(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Alarm");
+        alertDialog.setMessage("Bu bir alarm diyoloğudur.");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+
 
     @Override
     public void onClick(View view) {
